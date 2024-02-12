@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily:{
+      'quicksand':['quicksand'],
+      'nunito':['nunito'],
+    }
   },
   plugins: [],
 }
