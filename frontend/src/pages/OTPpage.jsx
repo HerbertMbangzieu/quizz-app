@@ -2,7 +2,9 @@ import React from 'react'
 
 const OTPpage = () => {
   return (
-    <div>OTPpage</div>
+    <div>
+        <Menu auth={false} />
+    </div>
   )
 }
 

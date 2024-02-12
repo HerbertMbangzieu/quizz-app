@@ -1,8 +1,11 @@
 import React from 'react'
+import Menu from '../components/Menu'
 
 const SignIn = () => {
   return (
-    <div>SignIn</div>
+    <div>
+        <Menu auth={false} />
+    </div>
   )
 }
 
