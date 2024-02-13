@@ -1,8 +1,11 @@
 import React from 'react'
+import Menu from '../components/Menu'
 
 const ForgotPassword = () => {
   return (
-    <div>ForgotPassword</div>
+    <div>
+        <Menu auth={false} />
+    </div>
   )
 }
 
