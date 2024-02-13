@@ -31,7 +31,7 @@ const Alert = ({ message, type, show }) => {
     <div
       className={`absolute transition ease-in-out duration-300 px-10 md:px-20 lg:px-28 rounded py-4 md:py-4 lg:py-8 text-center text-white font-medium ${translate} ${bgColor}`}
     >
-      {message}
+      <div dangerouslySetInnerHTML={{ __html:  message  }} />
     </div>
   );
 };

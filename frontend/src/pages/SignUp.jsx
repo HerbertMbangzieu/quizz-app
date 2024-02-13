@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import Menu from "../components/Menu";
 import Alert from "../components/Alert";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import * as EmailValidator from "email-validator";
+import {
+  OTPgenerator,
+  match,
+  sendEmail,
+  setMessage,
+} from "../functions/functions.js";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -11,13 +18,35 @@ const SignUp = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setAlertType("info");
-    setAlertMessage("Information Have been submitted");
-    setShowAlert(true);
-    console.log("sent");
+
+    const errors = [];
+    !EmailValidator.validate(email) &&
+      errors.push("The email format is not valid");
+
+    !match(password, confirmPassword) &&
+      errors.push("Password and Confirmation must match");
+
+    if (errors.length > 0) {
+      setAlertMessage(setMessage(errors));
+      setAlertType("danger");
+      setShowAlert(true);
+    } else {
+      const OTP = OTPgenerator();
+      const data = {
+        sendername: "Quizz App",
+        to: email,
+        message: OTP,
+        replyto: "",
+        subject: "OTP code for registration",
+      };
+      sendEmail(data);
+      const user = { email, username, password, type: "user" };
+      navigate("/OTP", { state: { OTP, user } });
+    }
   };
 
   return (
@@ -43,8 +72,9 @@ const SignUp = () => {
           <input
             type="text"
             className="border-[1px] rounded px-3"
+            required={true}
             placeholder="Enter your email ..."
-            onClick={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -53,8 +83,9 @@ const SignUp = () => {
           <input
             type="text"
             className="border-[1px] rounded px-3"
+            required={true}
             placeholder="Enter your username ..."
-            onClick={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
@@ -63,8 +94,9 @@ const SignUp = () => {
           <input
             type="password"
             className="border-[1px] rounded px-3"
+            required={true}
             placeholder="Enter your password ..."
-            onClick={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
@@ -73,8 +105,9 @@ const SignUp = () => {
           <input
             type="password"
             className="border-[1px] rounded px-3"
+            required={true}
             placeholder="Enter your password again ..."
-            onClick={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
 
