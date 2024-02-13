@@ -90,7 +90,7 @@ router.put("/:id", async (request, response) => {
 });
 
 /**
- * Create a Route t delete a given user delete: /users/:id
+ * Create a Route to delete a given user delete: /users/:id
  */
 
 router.delete("/:id", async (request, response) => {
@@ -104,6 +104,16 @@ router.delete("/:id", async (request, response) => {
     console.error({ message: error.message });
     return response.status(500).send({ message: error.message });
   }
+});
+
+/**
+ * Creae a route to sign in as user: /users/:email/:password
+ */
+router.get("/signin/:email/:password", async (request, response) => {
+  const { email, password } = request.params;
+  const user = await User.findOne({ email: email, password: password }).exec();
+
+  response.status(200).json(user);
 });
 
 export default router;

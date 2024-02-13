@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
 
 import "dotenv/config";
+import { User } from "./models/userModel.js";
 
 //Create an express app
 const app = express();
@@ -20,6 +21,12 @@ app.use(cors());
 /**
  * Make the app accepting the creation of books in json format
  */
+app.get("/signin/:email/:password", async (request, response) => {
+  const { email, password } = request.params;
+  const user = await User.findOne({ email: email, password: password }).exec();
+
+  response.status(200).json(user);
+});
 app
   .use(express.json())
   /**
@@ -43,7 +50,7 @@ mongoose
   .then(() => {
     console.log("App connected to database");
     app.listen(PORT, () => {
-      console.log(`Running on PORT ${URL}`);
+      console.log(`Running on PORT ${PORT}`);
     });
   })
   .catch((error) => {
