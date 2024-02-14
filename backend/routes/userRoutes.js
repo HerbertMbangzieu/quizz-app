@@ -112,8 +112,7 @@ router.delete("/:id", async (request, response) => {
 router.get("/signin/:email/:password", async (request, response) => {
   const { email, password } = request.params;
   const user = await User.findOne({ email: email, password: password }).exec();
-
-  response.status(200).json(user);
+  return response.status(200).json(user);
 });
 
 export default router;

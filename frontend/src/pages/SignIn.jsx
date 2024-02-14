@@ -3,6 +3,7 @@ import Menu from "../components/Menu";
 import Alert from "../components/Alert";
 import { Link, useNavigate } from "react-router-dom";
 import * as EmailValidator from "email-validator";
+import axios from "axios";
 import {
   OTPgenerator,
   match,
@@ -12,7 +13,6 @@ import {
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
@@ -31,6 +31,22 @@ const SignIn = () => {
       setAlertType("danger");
       setShowAlert(true);
     } else {
+      fetch(`http://localhost:5555/users/signin/${email}/${password}`)
+        .then((response) => response.json())
+        .then((json) => {
+          if (json) {
+            json.type === "admin"
+              ? navigate("/home-admin", { state: { user: json } })
+              : navigate("/home-user", { state: { user: json } });
+          } else {
+            setAlertMessage("Email and/or password not correct");
+            setAlertType("danger");
+            setShowAlert(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     }
   };
 

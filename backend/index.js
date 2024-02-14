@@ -21,12 +21,6 @@ app.use(cors());
 /**
  * Make the app accepting the creation of books in json format
  */
-app.get("/signin/:email/:password", async (request, response) => {
-  const { email, password } = request.params;
-  const user = await User.findOne({ email: email, password: password }).exec();
-
-  response.status(200).json(user);
-});
 app
   .use(express.json())
   /**
