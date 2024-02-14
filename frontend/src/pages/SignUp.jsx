@@ -116,7 +116,7 @@ const SignUp = () => {
         </button>
         <div className="my-2 text-center">
           You already have an account ?
-          <Link to={"/sign-in"} className="text-blue-700 font-semibold">
+          <Link to={"/sign-in"} className="text-blue-700 font-semibold mx-2">
             Log in an account
           </Link>
         </div>

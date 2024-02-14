@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
 
 import "dotenv/config";
+import { User } from "./models/userModel.js";
 
 //Create an express app
 const app = express();
@@ -43,7 +44,7 @@ mongoose
   .then(() => {
     console.log("App connected to database");
     app.listen(PORT, () => {
-      console.log(`Running on PORT ${URL}`);
+      console.log(`Running on PORT ${PORT}`);
     });
   })
   .catch((error) => {
