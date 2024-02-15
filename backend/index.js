@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 import userRoutes from "./routes/userRoutes.js";
 import questionRoutes from "./routes/questionRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 import cors from "cors";
 
@@ -32,6 +33,10 @@ app
    * Use the Routes for questions with the middleware '/questions'
    */
   .use("/questions", questionRoutes)
+  /**
+   * Use the Routes for categories with the middleware '/categories'
+   */
+  .use("/categories", categoryRoutes)
 
   /**
    * Create the route /
